@@ -1,26 +1,34 @@
-import React from "react";
+import React, { useState } from "react";
 import TodoItem from "./TodoItem";
 
 const Todo = () => {
   //Array of objects to store TODO items
-  const Todos = [
-    {
-      todo: "Clean",
-    },
-    {
-      todo: "Read",
-    },
-  ];
+  const [todos, setTodos] = useState([]);
 
   const handleDelete = () => {
-    console.log("clicked");
+    setTodos((prevTodos) => {
+      const newTodos = [...prevTodos];
+      newTodos.pop();
+      return newTodos;
+    });
+  };
+
+  const handleSubmit = (inputValue) => {
+    setTodos((prevTodos) => {
+      const newTodos = [...prevTodos];
+      newTodos.push({
+        todo: inputValue,
+      });
+      return newTodos;
+    });
   };
   return (
     <div>
       <TodoItem
         heading="Todo App"
-        todos={Todos}
+        todos={todos}
         handleDeleteBtn={handleDelete}
+        handleSubmit={(inputValue) => handleSubmit(inputValue)}
       />
     </div>
   );
